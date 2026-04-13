@@ -126,18 +126,3 @@ body { display:grid; place-items:center; }
 .btn-group.is-clickable.is-pressed .btn-fx .shine,
 .btn-group.is-clickable:active .btn-fx .shine { opacity:.9; }
 
-.page-transition-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity .28s ease;
-  background: transparent;
-}
-.page-transition-overlay.is-hiding { opacity: 0; }
-.page-transition-overlay > .viewer {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-}

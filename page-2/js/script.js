@@ -4,10 +4,8 @@ const viewer = document.getElementById('viewer');
 function navigateWithFade(href) {
   if (!href || href === '#') return;
   try {
-    if (viewer) {
-      sessionStorage.setItem('pageTransitionOverlayHTML', viewer.outerHTML);
-      sessionStorage.setItem('pageTransitionPending', '1');
-    }
+    sessionStorage.removeItem('pageTransitionOverlayHTML');
+    sessionStorage.removeItem('pageTransitionPending');
   } catch (e) {}
   window.location.href = href;
 }
@@ -170,31 +168,9 @@ function renderSlide(slide) {
   });
 }
 
-function playPageTransitionOverlay() {
-  try {
-    if (sessionStorage.getItem('pageTransitionPending') !== '1') return;
-    const overlayHTML = sessionStorage.getItem('pageTransitionOverlayHTML');
-    sessionStorage.removeItem('pageTransitionPending');
-    sessionStorage.removeItem('pageTransitionOverlayHTML');
-    if (!overlayHTML) return;
-
-    const host = document.createElement('div');
-    host.className = 'page-transition-overlay';
-    host.innerHTML = overlayHTML;
-    document.body.appendChild(host);
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        host.classList.add('is-hiding');
-      });
-    });
-
-    host.addEventListener('transitionend', () => host.remove(), { once: true });
-    window.setTimeout(() => host.remove(), 450);
-  } catch (e) {}
-}
-
 renderSlide(currentSlide);
-window.addEventListener('load', () => {
-  playPageTransitionOverlay();
-});
+
+try {
+  sessionStorage.removeItem('pageTransitionOverlayHTML');
+  sessionStorage.removeItem('pageTransitionPending');
+} catch (e) {}
